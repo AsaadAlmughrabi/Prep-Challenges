@@ -79,7 +79,7 @@ const isPalindrome = (str) => {
     .split("")
     .join("");
 
-  return cleanedStr === cleanedStr.split("").reverse().join("");
+  return cleanedStr === cleanedStr.split("").reverse().join("");  
 };
 // -------------------------------------------------------------------------------------------------------
 
