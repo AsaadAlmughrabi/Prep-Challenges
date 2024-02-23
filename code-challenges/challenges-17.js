@@ -15,25 +15,21 @@
 //
 
 const recursionPattern = (int1, int2) => {
-  const pattern = [];
+  let result = [];
   let flag = true;
+  const generate = (curr, arr) => {
+    if (flag) {
+      arr.push(curr);
+      if (curr - int2 < 0) flag = false;
 
-  const generateRecursively = (current) => {
-      if (current >= 0 && flag) {
-          pattern.push(current);
-          if (current < 0) {
-              flag = false;
-          }
-          generateRecursively(current - int2);
-      } else if (current < 0 && flag === false) {
-          pattern.push(current);
-          generateRecursively(current + int2);
-      }
+      return generate(curr - int2, arr);
+    } else if (curr <= int1 && flag == false) {
+      arr.push(curr);
+      return generate(curr + int2, arr);
+    }
+    return arr;
   };
-
-  generateRecursively(int1);
-
-  return pattern;
+  return generate(int1, result);
 };
 
 // -------------------------------------------------------------------------------------------------------
@@ -53,14 +49,11 @@ const recursionPattern = (int1, int2) => {
 //
 
 const filterLinks = (str) => {
-  const startIndex = str.indexOf('href="') + 6;
-  const endIndex = str.indexOf('"', startIndex);
-
-  const url = str.substring(startIndex, endIndex);
-  const http = url.indexOf("://");
-  if (http !== -1) {
-    return url.substring(http + 3);
-  }
+  let startIndex = str.indexOf('"');
+  let endIndex = str.lastIndexOf('"');
+  let url = str.slice(startIndex + 1, endIndex);
+  let http = url.lastIndexOf("/") + 1;
+  url = url.slice(http);
   return url;
 };
 // -------------------------------------------------------------------------------------------------------
@@ -82,9 +75,8 @@ const filterLinks = (str) => {
 const isPalindrome = (str) => {
   const cleanedStr = str
     .toLowerCase()
-    .replace(/[^a-z0-9]/g, "")
+    .replace(/[^a-z]/g, "")
     .split("")
-    .filter((char) => char !== "")
     .join("");
 
   return cleanedStr === cleanedStr.split("").reverse().join("");
@@ -113,6 +105,7 @@ const isPalindrome = (str) => {
 const samePattern = (str, arr) => {
   // write your code here
 };
+
 // -------------------------------------------------------------------------------------------------------
 
 module.exports = { recursionPattern, filterLinks, isPalindrome, samePattern };
